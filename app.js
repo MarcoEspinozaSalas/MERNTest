@@ -71,6 +71,10 @@ const User = mongoose.model("users");
     res.send({ status: "error" });
   }
 }); */
+app.get("/", (request, response, next) => {
+  response.json({ message: "Hey! This is your server response!" });
+  next();
+});
 app.post("/register", (request, response) => {
   // hash the password
   bcrypt
