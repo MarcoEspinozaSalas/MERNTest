@@ -15,7 +15,7 @@ const auth = require("./auth");
 const JWT_SECRET =
   "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
-const mongoUrl =
+/* const mongoUrl =
   "mongodb+srv://admin:8alPAdMhQxprWTfH@cluster0.ycqazoq.mongodb.net/auth?retryWrites=true&w=majority";
 
 mongoose
@@ -25,7 +25,14 @@ mongoose
   .then(() => {
     console.log("Connected to database");
   })
-  .catch((e) => console.log(e));
+  .catch((e) => console.log(e)); */
+
+// require database connection 
+const dbConnect = require("./db/dbConnect");
+
+// execute database connection 
+dbConnect();
+
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -71,6 +78,7 @@ app.post("/register", (request, response) => {
     .then((hashedPassword) => {
       // create a new user instance and collect the data
       const user = new User({
+        name: request.body.name,
         email: request.body.email,
         password: hashedPassword,
       });
@@ -199,7 +207,7 @@ app.post("/userData", async (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("Server Started, PORT: 5000");
+  console.log("Server Started");
 });
 
 app.post("/forgot-password", async (req, res) => {
@@ -286,3 +294,6 @@ app.post("/reset-password/:id/:token", async (req, res) => {
     res.json({ status: "Something Went Wrong" });
   }
 });
+
+
+module.exports = app;
